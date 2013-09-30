@@ -16,6 +16,10 @@ public class bruteMd5{
 			
 			//check hashmap for match 
 			if(hashHash.containsKey(tempHash)){
+				//On the offchance same string is generated generate another string
+				if(hashHash.containsValue(tempString)){
+					continue;
+				}
 				System.out.println("Match!\n");
 				System.out.println("String 1: " + hashHash.get(tempHash) + " hash : " + generateMD5(hashHash.get(tempHash)) + "\n");
 				System.out.println("String 2: " + tempString + " hash : " + generateMD5(tempString) + "\n");
@@ -55,12 +59,6 @@ public class bruteMd5{
 		//start = s.substring(0,5);
 		return start + end;
 	}
-
-	
-	//public static String generateRandomString(){
-	//	SecureRandom random = new SecureRandom();
-	//	return new BigInteger(130, random).toString(32);
-	//}
 	
 	//Possibly faster
 	public static String generateString(Random rng, String characters, int length)
