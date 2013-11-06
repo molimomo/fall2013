@@ -18,27 +18,27 @@ int main(int argc, char *argv[])
   char c;
   int status;
 
-  if (argv[1] == NULL) {
+  if (argv[1] == NULL) {  //Checks for command line argument
     fprintf(stderr, "Please specify the file to verify\n");
     return 1;
   }
    
-  if ((in = open(argv[1], O_RDONLY)) < 0) {
+  if ((in = open(argv[1], O_RDONLY)) < 0) { // opens given file into 'in' fd
     perror("open");
     return 2;
   }
 
-  if ((fd = open("/dev/null", O_RDWR)) < 0) {
+  if ((fd = open("/dev/null", O_RDWR)) < 0) {  // opens dev/null into 'fd' fd
     perror("open");
     return 5;
   }
   
-  if (pipe(pipefd) < 0) {
+  if (pipe(pipefd) < 0) { //opens a pipe 
     perror("pipe");
     return 3;
   }
 
-  if ((pid = fork()) < 0) {
+  if ((pid = fork()) < 0) { //forks this process!
     perror("fork");
     return 4;
   }
@@ -52,8 +52,9 @@ int main(int argc, char *argv[])
     close(pipefd[1]);
     close(fd);
     close(in); 
-    
-    execlp("tidy", "tidy", "-asxml", (char *)0); 
+    printf("\n I am the child! \n");    
+    execlp("tidy", "tidy", "-asxml", (char *)0);
+    printf("\n I am still the child! \n"); 
     perror("execlp");
     return 5;
   }
